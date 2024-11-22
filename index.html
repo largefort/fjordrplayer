@@ -177,7 +177,6 @@ class FjordrPlayer {
 
   async handleGameUpload() {
     try {
-      // Create file input
       const input = document.createElement('input');
       input.type = 'file';
       input.accept = '.html,.zip';
@@ -185,7 +184,6 @@ class FjordrPlayer {
       input.onchange = async (e) => {
         const file = e.target.files[0];
         if (file) {
-          // In a real app, you'd upload to a server here
           await this.processGame(file);
         }
       };
@@ -198,25 +196,16 @@ class FjordrPlayer {
   }
 
   async processGame(file) {
-    // This is a simplified demo - in reality, you'd:
-    // 1. Upload the file to a server
-    // 2. Process/validate the game files
-    // 3. Create a sandboxed environment
-    // 4. Handle responsive scaling
-    
     const gameFrame = document.createElement('iframe');
     gameFrame.classList.add('game-frame');
     gameFrame.sandbox = 'allow-scripts allow-same-origin';
     
-    // For demo purposes, we're creating a blob URL
-    // In production, you'd serve from your backend
     const url = URL.createObjectURL(file);
     gameFrame.src = url;
     
     this.uploadOverlay.style.display = 'none';
     this.gameContainer.appendChild(gameFrame);
     
-    // Setup responsive handling
     this.setupResponsiveFrame(gameFrame);
   }
 
@@ -226,7 +215,6 @@ class FjordrPlayer {
         const width = entry.contentRect.width;
         const height = entry.contentRect.height;
         
-        // Send viewport info to the game
         frame.contentWindow.postMessage({
           type: 'viewport-update',
           width,
@@ -239,7 +227,6 @@ class FjordrPlayer {
   }
 }
 
-// Initialize the app
 document.addEventListener('DOMContentLoaded', () => {
   window.fjordrPlayer = new FjordrPlayer();
 });
